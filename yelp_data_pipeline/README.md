@@ -19,3 +19,9 @@ https://github.com/Yelp/yelp-fusion/blob/master/fusion/python/sample.py
 - NYC
     - https://www.nyc.gov/site/planning/data-maps/open-data/census-download-metadata.page
     - https://services5.arcgis.com/GfwWNkhOj9bNBqoJ/arcgis/rest/services/NYC_Census_Tracts_for_2020_US_Census/FeatureServer/0/query?where=1=1&outFields=*&outSR=4326&f=pgeojson
+
+## Permissions Notes
+Default service account needed additional access for `Secret Manager Secret Accessor`
+
+## Google Function Links
+- https://us-east1-enca-eats.cloudfunctions.net/category-refresh

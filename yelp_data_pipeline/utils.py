@@ -1,6 +1,5 @@
-import json
 import geopandas
-from treelib import Node, Tree
+from treelib import Tree
 from google.cloud import secretmanager
 
 PROJECT_ID = 'enca-eats'
