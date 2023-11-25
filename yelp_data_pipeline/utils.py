@@ -26,7 +26,7 @@ def find_neighborhood(p):
     for index, row in neighborhoods.iterrows():
         if row['geometry'].contains(p):
             return(row[['city','neighborhood']].to_dict())
-    return('Unknown')
+    return({'city': 'Unknown', 'neighborhood': 'Unknown'})
 
 def build_tree(cat_list):
     tree = Tree()
