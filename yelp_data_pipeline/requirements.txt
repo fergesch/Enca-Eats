@@ -8,3 +8,4 @@ yelpapi
 google-cloud-firestore
 google-cloud-secret-manager
 autopep8
+matplotlib
