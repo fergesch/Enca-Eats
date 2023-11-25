@@ -22,10 +22,10 @@ def get_secret_value(
 
 
 def find_neighborhood(p):
-    neighborhoods = geopandas.read_file("Boundaries - Neighborhoods.geojson")
+    neighborhoods = geopandas.read_file("yelp_data_pipeline/geo_data/uber.geojson")
     for index, row in neighborhoods.iterrows():
         if row['geometry'].contains(p):
-            return(row['pri_neigh'])
+            return(row[['city','neighborhood']].to_dict())
     return('Unknown')
 
 def build_tree(cat_list):
@@ -49,4 +49,8 @@ def build_tree(cat_list):
 
 
 if __name__ == '__main__':
-    pass
+    # pass
+    from shapely.geometry import Point
+    p = Point(-74.02765511135665, 40.74387321381147) # 615 Hudson
+    p = Point(-73.95591076059685, 40.778376628289436) #155 E 84th
+    print(find_neighborhood(p))
