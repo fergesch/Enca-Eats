@@ -1,0 +1,10 @@
+jupyter
+pandas
+numpy
+requests
+treelib
+geopandas
+yelpapi
+google-cloud-firestore
+google-cloud-secret-manager
+autopep8
