@@ -21,4 +21,6 @@ geo_list = [
     jc[['neighborhood', 'city', 'geometry']],
 ]
 gdf = pd.concat(geo_list)
+
+gdf = gdf.dissolve(by=['neighborhood', 'city'])
 gdf.to_file("yelp_data_pipeline/geo_data/uber.geojson", driver="GeoJSON")
