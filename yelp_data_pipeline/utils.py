@@ -1,8 +1,10 @@
 import geopandas
 from treelib import Tree
 from google.cloud import secretmanager
+from google.cloud import firestore
 
 PROJECT_ID = 'enca-eats'
+DB = firestore.Client(project=PROJECT_ID)
 
 def get_secret_value(
     project_id: str, secret_id: str, version_id: str = 'latest'
@@ -20,12 +22,23 @@ def get_secret_value(
     return response.payload.data.decode("UTF-8")
 
 
-def find_neighborhood(p):
-    neighborhoods = geopandas.read_file("yelp_data_pipeline/geo_data/uber.geojson")
+def batch_upsert(collection, upsert_list, id_field, batch_size=500):
+    chunks = [upsert_list[i:i+batch_size] for i in range(0, len(upsert_list), batch_size)]
+    batch = DB.batch()
+    for chunk in chunks:
+        for value in chunk:
+            doc_ref = DB.collection(collection).document(value[id_field])
+            batch.set(doc_ref, value)
+        batch.commit()
+
+
+def find_neighborhood(p, neighborhoods):
+    # neighborhoods = geopandas.read_file("geo_data/uber.geojson")
     for index, row in neighborhoods.iterrows():
         if row['geometry'].contains(p):
             return(row[['city','neighborhood']].to_dict())
     return({'city': 'Unknown', 'neighborhood': 'Unknown'})
+
 
 def build_tree(cat_list):
     tree = Tree()
@@ -51,5 +64,5 @@ if __name__ == '__main__':
     # pass
     from shapely.geometry import Point
     p = Point(-74.02765511135665, 40.74387321381147) # 615 Hudson
-    p = Point(-73.95591076059685, 40.778376628289436) #155 E 84th
+    p = Point(-73.95591076059685, 40.778376628289436) # 155 E 84th
     print(find_neighborhood(p))
